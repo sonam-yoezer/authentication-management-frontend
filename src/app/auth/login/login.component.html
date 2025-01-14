@@ -1,0 +1,63 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="text-center mb-4">Login</h2>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  [(ngModel)]="loginData.email"
+                  required
+                  email
+                  #email="ngModel">
+                <div class="text-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                  <small *ngIf="email.errors?.['required']">Email is required</small>
+                  <small *ngIf="email.errors?.['email']">Please enter a valid email</small>
+                </div>
+              </div>
+  
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  [(ngModel)]="loginData.password"
+                  required
+                  minlength="6"
+                  #password="ngModel">
+                <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                  <small *ngIf="password.errors?.['required']">Password is required</small>
+                  <small *ngIf="password.errors?.['minlength']">Password must be at least 6 characters</small>
+                </div>
+              </div>
+  
+              <button 
+                type="submit" 
+                class="btn btn-primary w-100"
+                [disabled]="loginForm.invalid">
+                Login
+              </button>
+            </form>
+  
+            <div class="mt-3 text-center">
+              <p class="mb-0">Don't have an account? 
+                <a routerLink="/signup">Sign up</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
