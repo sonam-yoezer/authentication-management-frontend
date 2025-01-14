@@ -1,0 +1,114 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="text-center mb-4">Sign Up</h2>
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+          <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+            <div class="mb-3">
+              <label for="userName" class="form-label">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="userName"
+                name="userName"
+                [(ngModel)]="signupData.userName"
+                required
+                minlength="3"
+                #userName="ngModel">
+              <div class="text-danger" *ngIf="userName.invalid && (userName.dirty || userName.touched)">
+                <small *ngIf="userName.errors?.['required']">Username is required</small>
+                <small *ngIf="userName.errors?.['minlength']">Username must be at least 3 characters</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                [(ngModel)]="signupData.email"
+                required
+                email
+                #email="ngModel">
+              <div class="text-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                <small *ngIf="email.errors?.['required']">Email is required</small>
+                <small *ngIf="email.errors?.['email']">Please enter a valid email</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="phoneNumber" class="form-label">Phone Number</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="phoneNumber"
+                name="phoneNumber"
+                [(ngModel)]="signupData.phoneNumber"
+                required
+                pattern="[0-9]{8}"
+                #phoneNumber="ngModel">
+              <div class="text-danger" *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
+                <small *ngIf="phoneNumber.errors?.['required']">Phone number is required</small>
+                <small *ngIf="phoneNumber.errors?.['pattern']">Please enter a valid 8-digit phone number</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                [(ngModel)]="signupData.password"
+                required
+                minlength="6"
+                #password="ngModel">
+              <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                <small *ngIf="password.errors?.['required']">Password is required</small>
+                <small *ngIf="password.errors?.['minlength']">Password must be at least 6 characters</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                name="confirmPassword"
+                [(ngModel)]="signupData.confirmPassword"
+                required
+                #confirmPassword="ngModel">
+              <div class="text-danger" 
+                   *ngIf="(confirmPassword.dirty || confirmPassword.touched) && 
+                         signupData.password !== signupData.confirmPassword">
+                Passwords do not match
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn btn-primary w-100"
+              [disabled]="signupForm.invalid || !passwordsMatch()">
+              Sign Up
+            </button>
+          </form>
+
+          <div class="mt-3 text-center">
+            <p class="mb-0">Already have an account? 
+              <a routerLink="/login">Login</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
